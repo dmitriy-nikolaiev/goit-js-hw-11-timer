@@ -2,10 +2,6 @@ import './styles.css';
 
 class CountdownTimer {
   #element;
-  #secsRef;
-  #minsRef;
-  #hoursRef;
-  #daysRef;
   #timerId = null;
 
   constructor(selector, targetDate) {
@@ -35,28 +31,28 @@ class CountdownTimer {
 
   render() {
     const time = this.targetDate - new Date();
+
     if (time <= 0) {
       clearInterval(this.#timerId);
       return;
     }
 
-    this.#secsRef.textContent = this.transformValues(this.getSeconds(time));
-    this.#minsRef.textContent = this.transformValues(this.getMinutes(time));
-    this.#hoursRef.textContent = this.transformValues(this.getHours(time));
-    this.#daysRef.textContent = this.transformValues(this.getDays(time));
+    this.#element.querySelector(
+      '[data-value="secs"]',
+    ).textContent = this.transformValues(this.getSeconds(time));
+    this.#element.querySelector(
+      '[data-value="mins"]',
+    ).textContent = this.transformValues(this.getMinutes(time));
+    this.#element.querySelector(
+      '[data-value="hours"]',
+    ).textContent = this.transformValues(this.getHours(time));
+    this.#element.querySelector(
+      '[data-value="days"]',
+    ).textContent = this.transformValues(this.getDays(time));
   }
 
   init() {
-    try {
-      this.#element = document.querySelector(this.selector);
-      this.#secsRef = this.#element.querySelector('[data-value="secs"]');
-      this.#minsRef = this.#element.querySelector('[data-value="mins"]');
-      this.#hoursRef = this.#element.querySelector('[data-value="hours"]');
-      this.#daysRef = this.#element.querySelector('[data-value="days"]');
-    } catch (error) {
-      console.warn('Error! No items found with this selector');
-      return;
-    }
+    this.#element = document.querySelector(this.selector);
 
     this.#timerId = setInterval(() => {
       this.render();
