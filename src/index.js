@@ -9,22 +9,6 @@ class CountdownTimer {
     this.targetDate = targetDate;
   }
 
-  getDays(time) {
-    return Math.floor(time / (1000 * 60 * 60 * 24));
-  }
-
-  getHours(time) {
-    return Math.floor((time % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-  }
-
-  getMinutes(time) {
-    return Math.floor((time % (1000 * 60 * 60)) / (1000 * 60));
-  }
-
-  getSeconds(time) {
-    return Math.floor((time % (1000 * 60)) / 1000);
-  }
-
   transformValues(value) {
     return String(value).padStart(2, '0');
   }
@@ -36,19 +20,23 @@ class CountdownTimer {
       clearInterval(this.#timerId);
       return;
     }
+    const days = Math.floor(time / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((time % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    const mins = Math.floor((time % (1000 * 60 * 60)) / (1000 * 60));
+    const secs = Math.floor((time % (1000 * 60)) / 1000);
 
     this.#element.querySelector(
       '[data-value="secs"]',
-    ).textContent = this.transformValues(this.getSeconds(time));
+    ).textContent = this.transformValues(secs);
     this.#element.querySelector(
       '[data-value="mins"]',
-    ).textContent = this.transformValues(this.getMinutes(time));
+    ).textContent = this.transformValues(mins);
     this.#element.querySelector(
       '[data-value="hours"]',
-    ).textContent = this.transformValues(this.getHours(time));
+    ).textContent = this.transformValues(hours);
     this.#element.querySelector(
       '[data-value="days"]',
-    ).textContent = this.transformValues(this.getDays(time));
+    ).textContent = this.transformValues(days);
   }
 
   init() {
