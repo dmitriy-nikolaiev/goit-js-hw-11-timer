@@ -17,9 +17,11 @@ body {
   justify-content: center;
   color: #fff;
 }
+
 .timer.after-date {
   color: #df0000;
 }
+
 .field {
   display: flex;
   flex-direction: column;
@@ -28,7 +30,6 @@ body {
 
 .value {
   font-size: 50px;
-  /* color: white; */
 }
 .label {
   text-align: center;
