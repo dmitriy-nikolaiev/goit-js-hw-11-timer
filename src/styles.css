@@ -1,0 +1,36 @@
+html {
+  box-sizing: border-box;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: inherit;
+}
+
+body {
+  background-color: #212121;
+}
+
+.timer {
+  display: flex;
+  justify-content: center;
+  color: #fff;
+}
+.timer.after-date {
+  color: #df0000;
+}
+.field {
+  display: flex;
+  flex-direction: column;
+  padding: 25px;
+}
+
+.value {
+  font-size: 50px;
+  /* color: white; */
+}
+.label {
+  text-align: center;
+  color: #ababab;
+}
