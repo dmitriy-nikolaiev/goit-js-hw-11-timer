@@ -6,6 +6,7 @@ class CountdownTimer {
   #minsRef;
   #hoursRef;
   #daysRef;
+  #timerId = null;
 
   constructor(selector, targetDate) {
     this.selector = selector;
@@ -34,32 +35,30 @@ class CountdownTimer {
 
   render() {
     const time = this.targetDate - new Date();
-    if (time < 0) {
-      this.#element.classList.add('after-date');
+    if (time <= 0) {
+      clearInterval(this.#timerId);
+      return;
     }
 
-    this.#secsRef.textContent = this.transformValues(
-      this.getSeconds(Math.abs(time)),
-    );
-    this.#minsRef.textContent = this.transformValues(
-      this.getMinutes(Math.abs(time)),
-    );
-    this.#hoursRef.textContent = this.transformValues(
-      this.getHours(Math.abs(time)),
-    );
-    this.#daysRef.textContent = this.transformValues(
-      this.getDays(Math.abs(time)),
-    );
+    this.#secsRef.textContent = this.transformValues(this.getSeconds(time));
+    this.#minsRef.textContent = this.transformValues(this.getMinutes(time));
+    this.#hoursRef.textContent = this.transformValues(this.getHours(time));
+    this.#daysRef.textContent = this.transformValues(this.getDays(time));
   }
 
   init() {
-    this.#element = document.querySelector(this.selector);
-    this.#secsRef = this.#element.querySelector('[data-value="secs"]');
-    this.#minsRef = this.#element.querySelector('[data-value="mins"]');
-    this.#hoursRef = this.#element.querySelector('[data-value="hours"]');
-    this.#daysRef = this.#element.querySelector('[data-value="days"]');
+    try {
+      this.#element = document.querySelector(this.selector);
+      this.#secsRef = this.#element.querySelector('[data-value="secs"]');
+      this.#minsRef = this.#element.querySelector('[data-value="mins"]');
+      this.#hoursRef = this.#element.querySelector('[data-value="hours"]');
+      this.#daysRef = this.#element.querySelector('[data-value="days"]');
+    } catch (error) {
+      console.warn('Error! No items found with this selector');
+      return;
+    }
 
-    setInterval(() => {
+    this.#timerId = setInterval(() => {
       this.render();
     }, 1000);
   }

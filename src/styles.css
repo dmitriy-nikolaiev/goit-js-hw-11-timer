@@ -18,10 +18,6 @@ body {
   color: #fff;
 }
 
-.timer.after-date {
-  color: #df0000;
-}
-
 .field {
   display: flex;
   flex-direction: column;
