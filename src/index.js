@@ -1,8 +1,6 @@
 import './styles.css';
 
 class CountdownTimer {
-  // #timerId = null;
-
   constructor(selector, targetDate) {
     this.selector = selector;
     this.targetDate = targetDate;
@@ -41,15 +39,20 @@ class CountdownTimer {
     element.querySelector(
       '[data-value="days"]',
     ).textContent = this.transformValues(days);
-  }
 
-  // init() {
-  //   this.#timerId = setInterval(() => {
-  //     this.render();
-  //   }, 1000);
-  // }
+    //
+    const firstDigitRef = element.querySelector(
+      '[data-value="adds"] .first-digit',
+    );
+    const secondDigitRef = element.querySelector(
+      '[data-value="adds"] .second-digit',
+    );
+    const prevFirstDigitData = parseInt(firstDigitRef.textContent);
+    if (prevFirstDigitData != Math.trunc(secs / 10)) {
+      firstDigitRef.textContent = Math.trunc(secs / 10);
+    }
+    secondDigitRef.textContent = secs % 10;
+  }
 }
 
-// const timer = new CountdownTimer('#timer-1', new Date('Jul 17, 2021'));
-// timer.init();
 new CountdownTimer('#timer-1', new Date('Jul 17, 2021'));
